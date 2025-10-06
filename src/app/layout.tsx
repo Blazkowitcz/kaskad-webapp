@@ -2,7 +2,7 @@
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Navbar, Container, Nav, NavDropdown, Form, InputGroup} from "react-bootstrap"
-import {Input} from "postcss";
+import { AuthContextProvider } from "@/app/context/AuthContext";
 
 export default function RootLayout({
   children,
@@ -28,7 +28,7 @@ export default function RootLayout({
           </Navbar.Collapse>
       </Container>
       </Navbar>
-        {children}
+        <AuthContextProvider>{children}</AuthContextProvider>
       </body>
     </html>
   );
