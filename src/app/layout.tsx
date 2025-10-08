@@ -12,8 +12,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
+      <Navbar expand="lg" className="bg-body-tertiary test">
           <Navbar.Brand href="#home">Kaskad</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -26,7 +25,6 @@ export default function RootLayout({
                   </Form>
               </Nav>
           </Navbar.Collapse>
-      </Container>
       </Navbar>
         <AuthContextProvider>{children}</AuthContextProvider>
       </body>

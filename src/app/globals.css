@@ -1,11 +1,11 @@
 :root {
-  --background: #ffffff;
+  --background: #f6f6f6;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #22282f;
     --foreground: #ededed;
   }
 }
@@ -22,7 +22,7 @@ body {
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: var(--background) !important;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -43,4 +43,8 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+.test {
+  background: linear-gradient(90deg, #22b598 0%, #1691a0 100%);
 }
