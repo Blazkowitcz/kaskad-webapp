@@ -1,23 +1,26 @@
 "use client"
 import {Card, Form, Container, Button} from "react-bootstrap";
 import {useState} from "react";
+import { redirect } from 'next/navigation'
 
 export default function SignIn() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const connectionHandler = async (e) => {
-        e.preventDefault(); // empêche le rechargement de la page
+        e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:3000/auth/signin', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signin`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({username, password}),
+                credentials: 'include'
             });
 
             const data = await response.json();
-            console.log(data);
+
+            console.log(data)
 
             if (!response.ok) {
                 alert(data.message || 'Erreur de connexion');
@@ -26,8 +29,11 @@ export default function SignIn() {
 
             // Exemple : stocker le token dans le localStorage
             if (data.token) {
+                alert('Je rentre la')
                 localStorage.setItem('token', data.token);
-                alert('Connexion réussie !');
+                redirect('/')
+            }else {
+                alert('Je ne rentre pas la')
             }
 
         } catch (error) {
