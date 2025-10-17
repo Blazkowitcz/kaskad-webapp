@@ -1,7 +1,8 @@
 "use client"
 import {Card, Form, Container, Button} from "react-bootstrap";
 import {useState, FormEvent} from "react";
-import { useRouter } from 'next/navigation';
+import {useRouter} from 'next/navigation';
+import {useFetch} from '@/lib/api'
 import './style.scss'
 
 export default function SignIn() {
@@ -10,18 +11,17 @@ export default function SignIn() {
     const router = useRouter();
 
     const connectionHandler = async (e: FormEvent) => {
-        e.preventDefault();
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signin`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username, password}),
-            credentials: 'include'
-        });
-
-        if (!response.ok) {
-            return;
+        try {
+            e.preventDefault();
+            await useFetch(`auth/signin`, {
+                method: 'POST',
+                body: JSON.stringify({username, password}),
+            });
+            router.push('/');
+        } catch (e) {
+            alert(e.message);
         }
-        router.push('/');
+
     };
 
     return (
