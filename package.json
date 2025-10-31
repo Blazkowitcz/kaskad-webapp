@@ -3,20 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node server.ts",
+    "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@bbob/preset-react": "^4.3.1",
+    "@bbob/react": "^4.3.1",
+    "bbcode-to-html": "^1.0.2",
     "bootstrap": "^5.3.8",
     "date-fns": "^4.1.0",
     "filesize": "^11.0.13",
+    "html-react-parser": "^5.2.7",
     "next": "15.5.4",
     "react": "19.1.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "19.1.0",
-    "sass": "^1.93.2"
+    "sass": "^1.93.2",
+    "ya-bbcode": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
