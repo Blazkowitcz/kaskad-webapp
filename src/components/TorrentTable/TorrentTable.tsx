@@ -1,7 +1,7 @@
 import {ListGroup, Table, Badge} from 'react-bootstrap'
 import {Torrent} from '@/types/Torrent'
 import { formatDistance} from 'date-fns'
-import { filesize} from 'filesize'
+import { filesize } from 'filesize'
 import './style.scss'
 
 export default function TorrentTable({torrents}: { torrents: Torrent[] }) {
@@ -22,11 +22,11 @@ export default function TorrentTable({torrents}: { torrents: Torrent[] }) {
                 return (
                     <tr key={torrent.id}>
                         <td className="table-cell">{<Badge>{torrent.subcategory.name}</Badge>}</td>
-                        <td className="table-cell">{torrent.name}</td>
+                        <td className="table-cell">{<a href={`/torrents/${torrent.slug}`}>{torrent.name}</a>}</td>
                         <td className="table-cell">{formatDistance(new Date(torrent.createdAt), new Date(), {addSuffix: true})}</td>
                         <td className="table-cell">{filesize(torrent.size)}</td>
                         <td className="table-cell">{torrent.completed}</td>
-                        <td></td>
+                        <td className="table-cell">{<Badge>0</Badge>} / {<Badge>1</Badge>}</td>
                     </tr>)
             })}
             </tbody>
