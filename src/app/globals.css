@@ -45,6 +45,10 @@ a {
   }
 }
 
+.container {
+  max-width: 80vw !important;
+}
+
 .test {
   background: linear-gradient(90deg, #22b598 0%, #1691a0 100%);
 }

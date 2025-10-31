@@ -1,7 +1,7 @@
 "use client"
 
 import {Container} from "react-bootstrap"
-import {TorrentTable} from '@/components/TorrentTable/'
+import {TorrentTable} from '@/components'
 import {Torrent} from "@/types/Torrent";
 import {useState, useEffect} from "react";
 import {useFetch} from "@/lib/api";
@@ -28,7 +28,7 @@ export default function Home() {
         fetchData();
     }, []);
     return (
-        <>
+        <Container>
             {newTorrents.length > 0 && <>
                 <span>New Torrents</span>
                 <TorrentTable torrents={newTorrents}/>
@@ -37,6 +37,7 @@ export default function Home() {
             {bestTorrents.length > 0 && <>
                 <span>Best Torrents</span>
                 <TorrentTable torrents={bestTorrents}/>
-            </>}</>
+            </>}
+        </Container>
     );
 }
