@@ -5,8 +5,8 @@ import {useRouter} from 'next/navigation';
  * @param path
  * @param options
  */
-export async function useFetch(path: string, options: RequestInit = {}) {
-    console.log(options);
+export async function useFetch(path: string, options: RequestInit = {}, returnType: string =  'json') {
+    console.log(path);
     const res: Response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
         ...options,
         credentials: 'include',
@@ -25,6 +25,12 @@ export async function useFetch(path: string, options: RequestInit = {}) {
 
     if (!res.ok) {
         throw new Error('API error');
+    }
+    switch (returnType) {
+        case 'json':
+            return res.json();
+        case 'blob':
+            return res.blob();
     }
     return res.json();
 }
