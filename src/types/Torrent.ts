@@ -1,4 +1,5 @@
 import {User} from './User';
+
 export type Torrent = {
     id: string;
     name: string;
@@ -9,5 +10,6 @@ export type Torrent = {
     size: number;
     completed: number;
     createdAt: Date;
-    user:  User;
+    user: User;
+    seeders?: number
 }
