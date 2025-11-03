@@ -3,19 +3,28 @@ import yabbcode from 'ya-bbcode'
 const parser = new yabbcode();
 parser.registerTag('align', {
     type: "replace",
-    open: function(direction) {
+    open: function (direction) {
         return `<div style="text-align: ${direction}">`
     },
-    close: function() {
+    close: function () {
+        return "</div>"
+    }
+})
+parser.registerTag('center', {
+    type: "replace",
+    open: function () {
+        return `<div style="text-align: center">`
+    },
+    close: function () {
         return "</div>"
     }
 })
 parser.registerTag('color', {
     type: "replace",
-    open: function(color) {
+    open: function (color) {
         return `<div style="color: ${color}">`
     },
-    close: function() {
+    close: function () {
         return "</div>"
     }
 })
