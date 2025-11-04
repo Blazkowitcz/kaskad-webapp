@@ -1,4 +1,4 @@
-import {User} from './User';
+import {User, Language} from './';
 
 export type Torrent = {
     id: string;
@@ -12,4 +12,5 @@ export type Torrent = {
     createdAt: Date;
     user: User;
     seeders?: number
+    languages: Language[];
 }
