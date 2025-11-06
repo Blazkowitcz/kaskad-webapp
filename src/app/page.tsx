@@ -5,6 +5,7 @@ import {TorrentTable} from '@/components'
 import {Torrent} from "@/types/Torrent";
 import {useState, useEffect} from "react";
 import {useFetch} from "@/lib/api";
+import "./style.scss";
 
 export default function Home() {
     const [newTorrents, setNewTorrents] = useState([]);
@@ -29,15 +30,18 @@ export default function Home() {
     }, []);
     return (
         <Container>
-            {newTorrents.length > 0 && <>
-                <span>New Torrents</span>
-                <TorrentTable torrents={newTorrents}/>
-            </>}
-
-            {bestTorrents.length > 0 && <>
-                <span>Best Torrents</span>
-                <TorrentTable torrents={bestTorrents}/>
-            </>}
+            {newTorrents.length > 0 && (
+                <>
+                    <div className="section-title">New Torrents</div>
+                    <TorrentTable torrents={newTorrents}/>
+                </>
+            )}
+            {bestTorrents.length > 0 && (
+                <>
+                    <div className="section-title">Best Torrents</div>
+                    <TorrentTable torrents={bestTorrents}/>
+                </>
+            )}
         </Container>
     );
 }
