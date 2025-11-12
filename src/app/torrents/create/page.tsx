@@ -53,7 +53,8 @@ export default function TorrentDetail({params}) {
                 </Form.Group>
                 {languages.length > 0 && (<Form.Group className="mb-3" controlId="formTitle">
                     <Form.Label>Languages</Form.Label>
-                    <Form.Select>
+                    <Form.Select defaultValue="">
+                        <option disabled={true} value="">Select a language</option>
                         {languages.map((language) => (
                             <option key={language.id} value={language.id}>{language.name}</option>
                         ))}
@@ -62,7 +63,8 @@ export default function TorrentDetail({params}) {
 
                 {categories.length > 0 && (<Form.Group className="mb-3" controlId="formTitle">
                     <Form.Label>Categories</Form.Label>
-                    <Form.Select onChange={(e: ChangeEvent) => handleDataChange(e, FIELDS.CATEGORY)}>
+                    <Form.Select defaultValue="" onChange={(e: ChangeEvent) => handleDataChange(e, FIELDS.CATEGORY)}>
+                        <option disabled={true} value="">Select a category</option>
                         {categories.map((category) => (
                             <option key={category.id} value={category.id}>{category.name}</option>
                         ))}
@@ -71,7 +73,8 @@ export default function TorrentDetail({params}) {
 
                 {subcategories.length > 0 && (<Form.Group className="mb-3" controlId="formTitle">
                     <Form.Label>Subcategories</Form.Label>
-                    <Form.Select onChange={(e: ChangeEvent) => handleDataChange(e, FIELDS.SUBCATEGORY)}>
+                    <Form.Select defaultValue="" onChange={(e: ChangeEvent) => handleDataChange(e, FIELDS.SUBCATEGORY)}>
+                        <option disabled={true} value="">Select a subcategory</option>
                         {filteredSubcategories.map((subcategory) => (
                             <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
                         ))}
