@@ -6,6 +6,7 @@ import {useFetch} from '@/lib/api'
 import './style.scss'
 
 export default function SignIn() {
+    const {fetchApi} = useFetch();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
@@ -13,13 +14,13 @@ export default function SignIn() {
     const connectionHandler = async (e: FormEvent) => {
         try {
             e.preventDefault();
-            await useFetch(`auth/signin`, {
+            await fetchApi(`auth/signin`, {
                 method: 'POST',
                 body: JSON.stringify({username, password}),
             });
             router.push('/');
-        } catch (e) {
-            alert(e.message);
+        } catch (err: unknown) {
+            alert(err instanceof Error ? err.message : "Erreur inconnue");
         }
 
     };

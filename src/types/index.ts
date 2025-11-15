@@ -1,3 +1,5 @@
-export type { Language } from './Language'
-export type { Torrent } from './Torrent'
-export type { User } from './User'
+export type {Language} from './Language'
+export type {Torrent} from './Torrent'
+export type {User} from './User'
+export type {Category} from './Category'
+export type {Subcategory} from './Subcategory'

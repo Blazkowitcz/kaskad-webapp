@@ -8,6 +8,7 @@ import {useFetch} from "@/lib/api";
 import "./style.scss";
 
 export default function Home() {
+    const {fetchApi} = useFetch();
     const [newTorrents, setNewTorrents] = useState([]);
     const [bestTorrents, setBestTorrents] = useState([]);
 
@@ -15,8 +16,8 @@ export default function Home() {
         async function fetchData() {
             try {
                 const [bests, news] = await Promise.all([
-                    useFetch("torrents/best"),
-                    useFetch("torrents/last"),
+                    fetchApi("torrents/best"),
+                    fetchApi("torrents/last"),
                 ]);
 
                 setBestTorrents(bests);

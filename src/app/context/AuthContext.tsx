@@ -1,29 +1,39 @@
 "use client"
-import { createContext, useEffect, useContext, useState } from "react";
+import React, {createContext, useEffect, useContext, useState} from "react";
+import {User} from '@/types/'
 
-const AuthContext = createContext();
+interface AuthContextType {
+    user: User | null;
+    loading: boolean;
+    checkAuth: () => Promise<void>;
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
+}
 
-export const AuthContextProvider = ({ children }: {children: React.ReactNode}) => {
-    const [user, setUser] = useState(null);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthContextProvider = ({children}: { children: React.ReactNode }) => {
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     const checkAuth = async () => {
-        try{
+        try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/check`, {credentials: 'include'});
-            if(res.ok){
+            if (res.ok) {
                 const data = await res.json();
                 setUser(data);
-            }else{
+            } else {
                 setUser(null);
             }
         } catch (error) {
             setUser(null);
-        }finally {
+        } finally {
             setLoading(false);
         }
     }
 
-    useEffect(() => { checkAuth()}, []);
+    useEffect(() => {
+        checkAuth()
+    }, []);
 
     return (
         <AuthContext.Provider value={{user, loading, checkAuth, setUser}}>

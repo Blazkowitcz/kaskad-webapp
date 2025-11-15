@@ -5,31 +5,42 @@ import "./style.scss";
 import {useState, useEffect, useCallback, ChangeEvent} from "react";
 import {useFetch} from "@/lib/api";
 import {FIELDS} from '@/constants'
+import {Subcategory, Category, Language} from "@/types";
 
-export default function TorrentDetail({params}) {
-    const [languages, setLanguages] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [subcategories, setSubcategories] = useState([]);
-    const [filteredSubcategories, setFilteredSubcategories] = useState([]);
+type FormData = {
+    language: '',
+    category: '',
+    subcategory: '',
+    description: '',
+}
 
-    const formData = {
+export default function TorrentDetail() {
+    const [languages, setLanguages] = useState<Language[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+    const [formData, setFormData] = useState<FormData>({
         language: '',
         category: '',
         subcategory: '',
         description: '',
-    }
+    });
+    const {fetchApi} = useFetch();
+    const [filteredSubcategories, setFilteredSubcategories] = useState<Subcategory[]>([]);
+
 
     useEffect(() => {
         async function fetchData() {
             const [fetchSubcategories, fetchLanguages] = await Promise.all([
-                useFetch(FIELDS.SUBCATEGORIES),
-                useFetch(FIELDS.LANGUAGES),
+                fetchApi<Subcategory[]>(FIELDS.SUBCATEGORIES),
+                fetchApi<Language[]>(FIELDS.LANGUAGES),
             ]);
-            setCategories(Array.from(
-                new Map(
-                    fetchSubcategories.map(subcategory => [subcategory.category.id, subcategory.category])
-                ).values()
-            ));
+            setCategories(
+                Array.from(
+                    new Map(
+                        fetchSubcategories.map(subcategory => [subcategory.category.id, subcategory.category])
+                    ).values()
+                )
+            );
             setSubcategories(fetchSubcategories);
             setLanguages(fetchLanguages);
         }
@@ -37,12 +48,22 @@ export default function TorrentDetail({params}) {
         fetchData();
     }, []);
 
-    const handleDataChange = useCallback((event: ChangeEvent, field: string) => {
-        formData[field] = event.target.value as string;
-        if (field === FIELDS.CATEGORY) {
-            setFilteredSubcategories(subcategories.filter((subcategory) => subcategory.category.id === event.target.value));
-        }
-    }, [formData, subcategories])
+    const handleDataChange = useCallback(
+        (event: ChangeEvent<HTMLSelectElement | HTMLInputElement>, field: keyof FormData) => {
+            setFormData(prev => ({
+                ...prev,
+                [field]: event.target.value
+            }));
+
+            if (field === 'category') {
+                setFilteredSubcategories(
+                    subcategories.filter(sub => sub.category.id === event.target.value)
+                );
+            }
+        },
+        [subcategories]
+    );
+
 
     return (<>
         <span className="title">Uploader un Torrent</span>
@@ -55,7 +76,7 @@ export default function TorrentDetail({params}) {
                     <Form.Label>Languages</Form.Label>
                     <Form.Select defaultValue="">
                         <option disabled={true} value="">Select a language</option>
-                        {languages.map((language) => (
+                        {languages.map((language: Language) => (
                             <option key={language.id} value={language.id}>{language.name}</option>
                         ))}
                     </Form.Select>
@@ -63,9 +84,10 @@ export default function TorrentDetail({params}) {
 
                 {categories.length > 0 && (<Form.Group className="mb-3" controlId="formTitle">
                     <Form.Label>Categories</Form.Label>
-                    <Form.Select defaultValue="" onChange={(e: ChangeEvent) => handleDataChange(e, FIELDS.CATEGORY)}>
+                    <Form.Select defaultValue=""
+                                 onChange={(e: ChangeEvent<HTMLSelectElement>) => handleDataChange(e, FIELDS.CATEGORY)}>
                         <option disabled={true} value="">Select a category</option>
-                        {categories.map((category) => (
+                        {categories.map((category: Category) => (
                             <option key={category.id} value={category.id}>{category.name}</option>
                         ))}
                     </Form.Select>
@@ -73,9 +95,10 @@ export default function TorrentDetail({params}) {
 
                 {subcategories.length > 0 && (<Form.Group className="mb-3" controlId="formTitle">
                     <Form.Label>Subcategories</Form.Label>
-                    <Form.Select defaultValue="" onChange={(e: ChangeEvent) => handleDataChange(e, FIELDS.SUBCATEGORY)}>
+                    <Form.Select defaultValue=""
+                                 onChange={(e: ChangeEvent<HTMLSelectElement>) => handleDataChange(e, FIELDS.SUBCATEGORY)}>
                         <option disabled={true} value="">Select a subcategory</option>
-                        {filteredSubcategories.map((subcategory) => (
+                        {filteredSubcategories.map((subcategory: Subcategory) => (
                             <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
                         ))}
                     </Form.Select>

@@ -1,4 +1,4 @@
-import {User, Language} from './';
+import {User, Language, Subcategory} from './';
 
 export type Torrent = {
     id: string;
@@ -13,4 +13,5 @@ export type Torrent = {
     user: User;
     seeders?: number
     languages: Language[];
+    subcategory: Subcategory;
 }
